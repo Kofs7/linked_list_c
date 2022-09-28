@@ -67,7 +67,6 @@ int list_length(list_t *l) {
 }
 
 void list_add_to_back(list_t *l, elem value) {
-  // making a new node and initiallizing it's data
   node_t *new_node;
   new_node = node_alloc(value);
 
@@ -76,36 +75,34 @@ void list_add_to_back(list_t *l, elem value) {
   if (curr == NULL) {
     printf("List is empty!");
     return;
-    // l->head = new_node;
-    // new_node->next = NULL;
-    // return;
   }
 
-  while (curr->next != NULL){
+  while (curr->next != NULL) {
     curr = curr->next;
   }
 
   curr->next = new_node;
   new_node->next = NULL;
+  return;
 }
 
 void list_add_to_front(list_t *l, elem value) {
-  // making a new node and initiallizing it's data
   node_t *new_node;
   new_node = node_alloc(value);
 
   if (l->head == NULL) {
-    l->head = new_node;
-    new_node->next = NULL;
+    // l->head = new_node;
+    // new_node->next = NULL;
+    printf("List is empty!");
     return;
   }
 
   new_node->next = l->head;
   l->head = new_node;
+  return;
 }
         
 void list_add_at_index(list_t *l, elem value, int index) {
-  // making a new node and initiallizing it's data
   node_t *new_node;
   new_node = node_alloc(value);
 
@@ -115,12 +112,15 @@ void list_add_at_index(list_t *l, elem value, int index) {
   int len = list_length(l);
 
   if (l->head == NULL) {
-    if (index != 0) {
-      return;
-    }
-    else {
-      l->head = new_node;
-    }
+    // if (index != 0) {
+    //   printf("List is empty!");
+    //   return;
+    // }
+    // else {
+    //   l->head = new_node;
+    // }
+    printf("List is empty!");
+    return;
   }
   if ((l->head != NULL) && (index == 0)) {
     list_add_to_front(l, value);
@@ -138,13 +138,14 @@ void list_add_at_index(list_t *l, elem value, int index) {
 
   new_node->next = curr;
   prev->next = new_node;
+  return;
 }
 
 elem list_remove_from_back(list_t *l) { 
   int popped = 0;
 
   if (l->head == NULL) {
-    return -1;
+    return NULL;
   }
   if (l->head->next == NULL) {
     popped = l->head->value;
@@ -169,12 +170,13 @@ elem list_remove_from_front(list_t *l) {
   int popped;
 
   if (curr == NULL) {
-    return -1;
+    return NULL;
   }
 
   next_node = curr->next;
   popped = curr->value;
   node_free(curr);
+  curr = NULL;
   curr = next_node;
   return popped;
   // return -1;
@@ -187,7 +189,7 @@ elem list_remove_at_index(list_t *l, int index) {
   int list_len = list_length(l);
 
   if ((index > list_len) || (index < 0)) {
-    return -1;
+    return NULL;
   }
   
   while ((curr != NULL) && (step < index)) {
@@ -219,8 +221,8 @@ elem list_get_elem_at(list_t *l, int index) {
   int list_len = list_length(l);
   int step = 0;
 
-  if ((index >= list_len) || (index < 0)) {
-    return -1; 
+  if ((index >= list_len) || (index < 0) || (curr == NULL)) {
+    return NULL; 
   }
 
   while (curr != NULL) {
@@ -230,6 +232,7 @@ elem list_get_elem_at(list_t *l, int index) {
     step++;
     curr = curr->next;   
   }
+  return NULL;
 }
 
 int list_get_index_of(list_t *l, elem value) { 
@@ -248,5 +251,5 @@ int list_get_index_of(list_t *l, elem value) {
       return index;
     }
   }
-  return -1;
+  return NULL;
 }
